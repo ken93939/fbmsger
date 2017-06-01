@@ -1,2 +1,0 @@
-# fbmsger
-testFbmsger app
