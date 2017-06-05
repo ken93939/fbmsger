@@ -22,7 +22,7 @@ var watch             = false;
 var reserve_watch     = false;
 var other_restaurant  = false;
 
-let token = "EAADQZCNZCxtAgBALToYWc7n6peHAzSKjEOosVUBZBpuSRrtnZClLqAlMmWDb7RD9YZAWCQcXhE71ehfGOH3Jr777h8lYkuloo7uB6mMHjZChyUY7ZC6C5Ml3ZCs1mp2kjURo0WfwZAdir8sdOBRBvI4oDYCHcWhsxkAWXXzsnBDo6FAZDZD";
+let token = "EAAEONx1JKSIBAAZB3MnZCdf28QScAZBCQVoNh71cAeVCokCsf1jRUdNb84umWzAM6uKiLAvZC9ZBJmqejUjpY5OchLie9ch6fkUtehgO3ZCzSh30FZBTGw7CYTMAK3zxxoVno69zHGO0IVl6ZBHfCmASJh8RZC4NiUwQFbzR5GiVnfwZDZD";
 
 const server = express()
 
@@ -100,7 +100,7 @@ function receivedMessage(event) {
   var client = new Client();
 
   console.log('--------ansonv3--------');
-  client.get("https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/a567f523-22f8-4057-afcf-470f38eecb6d?subscription-key=85104b00ebda46949246c9828ee9f281&timezoneOffset=0.0&verbose=true&q=" + messageText, function (data, response) {
+  client.get("https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/7b537641-dc33-4c31-bd02-a2bd45da7b1b?subscription-key=42440c4b8a6446019961eb161cbe1765&verbose=true&timezoneOffset=0&q=" + messageText, function (data, response) {
     // parsed response body as js object 
     messageIntent = data.topScoringIntent.intent;
     if (data.entities[0] != null) {
@@ -288,7 +288,7 @@ function receivedPostback(event) {
   // When a postback is called, we'll send a message back to the sender to 
   // let them know it was successful
   sendTextMessage(senderID, "There is currently a promotion for 15% off for spendings over HKD 500 from 1-Mar to 31-Mar! \u000A \u000AWould you like to reserve this Tag Heuer model for you?");
-  reserve_watch = true;
+  reserve_watch = true; 
 }
 
 function sendTextMessage(recipientId, messageText) {
@@ -429,19 +429,25 @@ var mall_option = [
           "content_type":"text",
           "title":"Dining",
           "payload":"",
-          "image_url":"https://anson-messenger.herokuapp.com/img/icon/mall/dining.png"
+          "image_url":"https://fbmsger.herokuapp.com/img/icon/mall/dining.png"
         },
         {
           "content_type":"text",
           "title":"Shopping",
           "payload":"",
-          "image_url":"https://anson-messenger.herokuapp.com/img/icon/mall/shopping.png"
+          "image_url":"https://fbmsger.herokuapp.com/img/icon/mall/shopping.png"
         },
         {
           "content_type":"text",
           "title":"Entertainment",
           "payload":"",
-          "image_url":"https://anson-messenger.herokuapp.com/img/icon/mall/entertainment.png"
+          "image_url":"https://fbmsger.herokuapp.com/img/icon/mall/entertainment.png"
+        },
+        {
+          "content_type":"text",
+          "title":"Nappy change",
+          "payload":"",
+          "image_url":"https://fbmsger.herokuapp.com/img/icon/mall/nappy.png"
         }
       ];
 var shop_options = [
