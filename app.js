@@ -21,6 +21,7 @@ var Q2 = false;
 var watch             = false;
 var reserve_watch     = false;
 var other_restaurant  = false;
+var noNappy           = false;
 
 let token = "EAAEONx1JKSIBAAZB3MnZCdf28QScAZBCQVoNh71cAeVCokCsf1jRUdNb84umWzAM6uKiLAvZC9ZBJmqejUjpY5OchLie9ch6fkUtehgO3ZCzSh30FZBTGw7CYTMAK3zxxoVno69zHGO0IVl6ZBHfCmASJh8RZC4NiUwQFbzR5GiVnfwZDZD";
 
@@ -216,6 +217,14 @@ function receivedMessage(event) {
         case 'location':
           sendLocationMessage(senderID);
           break;
+        case 'nappy':
+          sendNappyChangeMessage(senderID);
+          setTimeout(function(){
+              sendTextMessage(senderID, "I'm sorry… I couldn't help but notice that you might be traveling with a small child. :) Would you be interested in hearing about some promotions on children's wear?");
+            }, 1000);
+          noNappy = true;
+          break;
+
 
 
 
@@ -253,6 +262,15 @@ function receivedMessage(event) {
           }
           watch = false;
 
+        }
+        else if (noNappy){
+          if(entityType =='positiveFeedback'){
+            sendTextMessage(senderID,"Great! Here is the current promotion at GAP KIDS / Baby GAP:");
+            setTimeout(function(){
+              //fill in
+            }, 1000);
+          }
+          noNappy = false;
         } else {
           sendTextMessage(senderID, "I'm sorry, but I didn't understand your answer.");
         }
@@ -442,12 +460,6 @@ var mall_option = [
           "title":"Entertainment",
           "payload":"",
           "image_url":"https://fbmsger.herokuapp.com/img/icon/mall/entertainment.png"
-        },
-        {
-          "content_type":"text",
-          "title":"Nappy change",
-          "payload":"",
-          "image_url":"https://fbmsger.herokuapp.com/img/icon/mall/nappy.png"
         }
       ];
 var shop_options = [
@@ -971,6 +983,62 @@ function sendDirectionMessage(recipientId, x, y) {
   callSendAPI(messageData);
 }
 
+
+function sendNappyChangeMessage(recipientId){
+  var messageData ={
+    recipient: {
+      "id": recipientID
+    },
+    message: {
+      "test" : "Sure, I can help with that. Based on your current location, the nearest nappy change facility is on 12/F:",
+      "attachment" : {
+        "type" : "image",
+        "payload" : {
+          "url" : "https://fbmsger.herokuapp.com/img/nappy.png"
+        }
+      }
+    }
+  }
+  callSendAPI(messageData);
+}
+
+function noNappyMessage(recipientID){
+  var messageData = {
+    "recipient" : {
+      "id" : recipientID
+    },
+    message : {
+      "attachment" : {
+        "type" : "template",
+        "payload" : {
+          "template_type" : "generic",
+          "sharable" : true,
+          elements: [
+            {
+              "title" : "GAP KIDS Baby GAP",
+              "image_url" : "https://hp.leegardens.com.hk/DCCustomization/Pages/GetAzureResizedFile.aspx?path=~\\\\lga\\\\media\\\\lga\\\\_resizedImages\\\\hysanplace\\\\shops\\\\items\\\\gap-kid\\\\330x260_gap-kids-sf.jpg",
+              "subtitle" : "Gap旗下的GapKids 以及babyGap，也將現身銅鑼灣。GapKids & babyGap以其柔軟的材質及多樣化的風格著稱，Gap對質量嚴格把關，因而獲得眾多荷裡活明星父母的青睞。",
+              "default_action" : {
+                "type" : "web_url",
+                "url" : "https://hp.leegardens.com.hk/#!/shopping-details/hysanplace/Shopping/Items/GAP-KIDS-Baby-GAP-kids",
+                "messenger_extensions" : true
+              },
+              "buttons" : [
+                {
+                  "type" : "web_url",
+                  "title" : "15% off all purchase over HKD 500",
+                  "url" : "https://hp.leegardens.com.hk/#!/shopping-details/hysanplace/Shopping/Items/GAP-KIDS-Baby-GAP-kids"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+
+  callSendAPI(messageData);
+}
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
