@@ -892,7 +892,7 @@ function getLocationMessage(recipientId) {
 
   var messageData = {
     recipient: {
-      id: recipientId
+      "id": recipientId
     },
     message: {
       "text":"Please share your location:",
@@ -911,7 +911,7 @@ function sendLocationMessage(recipientId) {
 
   var messageData = {
     recipient: {
-      id: recipientId
+      "id": recipientId
     },
     message: {
       "attachment": {
@@ -987,7 +987,7 @@ function sendDirectionMessage(recipientId, x, y) {
 function sendNappyChangeMessage(recipientId){
   var messageData ={
     recipient: {
-      "id": recipientID
+      "id": recipientId
     },
     message: {
       "test" : "Sure, I can help with that. Based on your current location, the nearest nappy change facility is on 12/F:",
@@ -1002,10 +1002,10 @@ function sendNappyChangeMessage(recipientId){
   callSendAPI(messageData);
 }
 
-function noNappyMessage(recipientID){
+function noNappyMessage(recipientId){
   var messageData = {
     "recipient" : {
-      "id" : recipientID
+      "id" : recipientId
     },
     message : {
       "attachment" : {
