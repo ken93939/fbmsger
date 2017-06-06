@@ -269,11 +269,11 @@ function receivedMessage(event) {
         }
         else if (noNappy){
           if(entityType =='positiveFeedback'){
-            sendTextMessage(senderID,"Great! Here is the current promotion at GAP KIDS / Baby GAP:");
-            setTimeout(function(){
-              noNappyMessage(senderID);
-              sendTextMessage(senderID,"Is there anything else I can help with?");
-            }, 2000);
+            sendTextMessage(senderID,"Great! Here is the current promotion at GAP KIDS / Baby GAP:", function(){
+              noNappyMessage(senderID, function(){
+                sendTextMessage(senderID,"Is there anything else I can help with?");
+              });
+            });
           }
           noNappy = false;
         } else {
@@ -314,7 +314,7 @@ function receivedPostback(event) {
   reserve_watch = true; 
 }
 
-function sendTextMessage(recipientId, messageText) {
+function sendTextMessage(recipientId, messageText,callback) {
   console.log('Q1: ' + Q1);
   console.log('Q2: ' + Q2);
   var messageData = {
@@ -326,7 +326,13 @@ function sendTextMessage(recipientId, messageText) {
     }
   };
 
-  callSendAPI(messageData);
+  callSendAPI(messageData, function(err){
+    if(!err){
+      if(callback){
+        callback();
+      }
+    }
+  });
 }
 
 function sendTestingMessage(recipientId) {
@@ -1003,7 +1009,7 @@ function sendNappyChangeMessage(recipientId, callback){
       }
     }
   }
-  callSendAPIWithCallback(messageData, function(err){
+  callSendAPI(messageData, function(err){
     if(!err){
       if(callback){
         callback();
@@ -1012,7 +1018,7 @@ function sendNappyChangeMessage(recipientId, callback){
   });
 }
 
-function noNappyMessage(recipientId){
+function noNappyMessage(recipientId, callback){
   var messageData = {
     "recipient" : {
       "id" : recipientId
@@ -1047,7 +1053,13 @@ function noNappyMessage(recipientId){
     }
   }
 
-  callSendAPI(messageData);
+  callSendAPI(messageData, function(err){
+    if(!err){
+      if(callback){
+        callback();
+      }
+    }
+  });
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -1061,7 +1073,7 @@ function noNappyMessage(recipientId){
 
 
 
-function callSendAPIWithCallback(messageData, callback) {
+function callSendAPI(messageData, callback) {
   request({
     uri: 'https://graph.facebook.com/v2.6/me/messages',
     qs: { access_token: token },
@@ -1090,24 +1102,24 @@ function callSendAPIWithCallback(messageData, callback) {
 }
 
 
-function callSendAPI(messageData) {
-  request({
-    uri: 'https://graph.facebook.com/v2.6/me/messages',
-    qs: { access_token: token },
-    method: 'POST',
-    json: messageData
+// function callSendAPI(messageData) {
+//   request({
+//     uri: 'https://graph.facebook.com/v2.6/me/messages',
+//     qs: { access_token: token },
+//     method: 'POST',
+//     json: messageData
 
-  }, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      var recipientId = body.recipient_id;
-      var messageId = body.message_id;
+//   }, function (error, response, body) {
+//     if (!error && response.statusCode == 200) {
+//       var recipientId = body.recipient_id;
+//       var messageId = body.message_id;
 
-      console.log("Successfully sent generic message with id %s to recipient %s", 
-        messageId, recipientId);
-    } else {
-      console.error("Unable to send message.");
-      console.error(response);
-      console.error(error);
-    }
-  });  
-}
+//       console.log("Successfully sent generic message with id %s to recipient %s", 
+//         messageId, recipientId);
+//     } else {
+//       console.error("Unable to send message.");
+//       console.error(response);
+//       console.error(error);
+//     }
+//   });  
+// }
