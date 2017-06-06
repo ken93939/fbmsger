@@ -218,11 +218,15 @@ function receivedMessage(event) {
           sendLocationMessage(senderID);
           break;
         case 'nappy':
-          sendNappyChangeMessage(senderID);
-          setTimeout(function(){
-              sendTextMessage(senderID, "I'm sorry… I couldn't help but notice that you might be traveling with a small child. :) Would you be interested in hearing about some promotions on children's wear?");
-            }, 1000);
-          noNappy = true;
+        sendTextMessage(senderID,"Sure, I can help with that. Based on your current location, the nearest nappy change facility is on 12/F:");
+          sendNappyChangeMessage(senderID, function(){
+            sendTextMessage(senderID, "I'm sorry… I couldn't help but notice that you might be traveling with a small child. :) Would you be interested in hearing about some promotions on children's wear?");
+            noNappy = true;
+          });
+          // setTimeout(function(){
+              
+          //   }, 1000);
+          
           break;
 
 
@@ -1001,7 +1005,7 @@ function sendNappyChangeMessage(recipientId){
   callSendAPI(messageData);
 }
 
-function noNappyMessage(recipientId){
+function noNappyMessage(recipientId, callback){
   var messageData = {
     "recipient" : {
       "id" : recipientId
@@ -1036,7 +1040,13 @@ function noNappyMessage(recipientId){
     }
   }
 
-  callSendAPI(messageData);
+  callSendAPIWithCallback(messageData, function(err){
+    if(!err){
+      if(callback){
+        callback();
+      }
+    }
+  });
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -1050,6 +1060,33 @@ function noNappyMessage(recipientId){
 
 
 
+function callSendAPIWithCallback(messageData, callback) {
+  request({
+    uri: 'https://graph.facebook.com/v2.6/me/messages',
+    qs: { access_token: token },
+    method: 'POST',
+    json: messageData
+
+  }, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      var recipientId = body.recipient_id;
+      var messageId = body.message_id;
+
+      console.log("Successfully sent generic message with id %s to recipient %s", 
+        messageId, recipientId);
+      if(callback){
+        callback();
+      }
+    } else {
+      console.error("Unable to send message.");
+      console.error(response);
+      console.error(error);
+      if(callback){
+        callback(error)
+      }
+    }
+  });  
+}
 
 
 function callSendAPI(messageData) {
