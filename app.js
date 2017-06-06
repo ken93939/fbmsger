@@ -990,7 +990,7 @@ function sendNappyChangeMessage(recipientId){
       "id": recipientId
     },
     message: {
-      "test" : "Sure, I can help with that. Based on your current location, the nearest nappy change facility is on 12/F:",
+      "text" : "Sure, I can help with that. Based on your current location, the nearest nappy change facility is on 12/F:",
       "attachment" : {
         "type" : "image",
         "payload" : {
@@ -1013,7 +1013,7 @@ function noNappyMessage(recipientId){
         "payload" : {
           "template_type" : "generic",
           "sharable" : true,
-          elements: [
+          "elements" : [
             {
               "title" : "GAP KIDS Baby GAP",
               "image_url" : "https://hp.leegardens.com.hk/DCCustomization/Pages/GetAzureResizedFile.aspx?path=~\\\\lga\\\\media\\\\lga\\\\_resizedImages\\\\hysanplace\\\\shops\\\\items\\\\gap-kid\\\\330x260_gap-kids-sf.jpg",
