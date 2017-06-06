@@ -988,7 +988,7 @@ function sendDirectionMessage(recipientId, x, y) {
 }
 
 
-function sendNappyChangeMessage(recipientId){
+function sendNappyChangeMessage(recipientId, callback){
   var messageData ={
     "recipient" : {
       "id": recipientId
@@ -1002,10 +1002,16 @@ function sendNappyChangeMessage(recipientId){
       }
     }
   }
-  callSendAPI(messageData);
+  callSendAPIWithCallback(messageData, function(err){
+    if(!err){
+      if(callback){
+        callback();
+      }
+    }
+  });
 }
 
-function noNappyMessage(recipientId, callback){
+function noNappyMessage(recipientId){
   var messageData = {
     "recipient" : {
       "id" : recipientId
@@ -1040,13 +1046,7 @@ function noNappyMessage(recipientId, callback){
     }
   }
 
-  callSendAPIWithCallback(messageData, function(err){
-    if(!err){
-      if(callback){
-        callback();
-      }
-    }
-  });
+  callSendAPI(messageData);
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
