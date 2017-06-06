@@ -1030,7 +1030,7 @@ function noNappyMessage(recipientId){
               "default_action" : {
                 "type" : "web_url",
                 "url" : "https://hp.leegardens.com.hk/#!/shopping-details/hysanplace/Shopping/Items/GAP-KIDS-Baby-GAP-kids",
-                "messenger_extensions" : true
+                "messenger_extensions" : false
               },
               "buttons" : [
                 {
