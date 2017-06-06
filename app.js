@@ -986,10 +986,10 @@ function sendDirectionMessage(recipientId, x, y) {
 
 function sendNappyChangeMessage(recipientId){
   var messageData ={
-    recipient: {
+    "recipient" : {
       "id": recipientId
     },
-    message: {
+    "message" : {
       "text" : "Sure, I can help with that. Based on your current location, the nearest nappy change facility is on 12/F:",
       "attachment" : {
         "type" : "image",
@@ -1007,7 +1007,7 @@ function noNappyMessage(recipientId){
     "recipient" : {
       "id" : recipientId
     },
-    message : {
+    "message" : {
       "attachment" : {
         "type" : "template",
         "payload" : {
