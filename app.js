@@ -271,7 +271,7 @@ function receivedMessage(event) {
           if(entityType =='positiveFeedback'){
             sendTextMessage(senderID,"Great! Here is the current promotion at GAP KIDS / Baby GAP:");
             setTimeout(function(){
-              //fill in
+              noNappyMessage(senderID);
             }, 1000);
           }
           noNappy = false;
