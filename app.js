@@ -990,7 +990,6 @@ function sendNappyChangeMessage(recipientId){
       "id": recipientId
     },
     "message" : {
-      "text" : "Sure, I can help with that. Based on your current location, the nearest nappy change facility is on 12/F:",
       "attachment" : {
         "type" : "image",
         "payload" : {
