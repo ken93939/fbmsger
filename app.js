@@ -272,7 +272,8 @@ function receivedMessage(event) {
             sendTextMessage(senderID,"Great! Here is the current promotion at GAP KIDS / Baby GAP:");
             setTimeout(function(){
               noNappyMessage(senderID);
-            }, 1000);
+              sendTextMessage(senderID,"Is there anything else I can help with?");
+            }, 2000);
           }
           noNappy = false;
         } else {
